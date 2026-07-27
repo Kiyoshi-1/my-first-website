@@ -1,28 +1,104 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>初めてのWebページ</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>【架空】しおさいDMO 公式サイト</title>
+    <!-- ここでTailwind CSSを読み込んでいます（魔法の杖です） -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body {
-            background-color: #f0f8ff;
-            font-family: sans-serif;
-            text-align: center;
-            padding-top: 50px;
-        }
-        h1 {
-            color: #333366;
-        }
-        p {
-            color: #555555;
-            font-size: 18px;
-        }
+        /* ちょっとしたアニメーション用の設定 */
+        .fade-in { animation: fadeIn 2s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
-<body>
+<body class="bg-gray-50 font-sans text-gray-800">
 
-    <h1>私の最初のWebページ</h1>
-    <p>ここから少しずつページを作っていきます。</p>
-    
+    <!-- 1. ヘッダー（ナビゲーション） -->
+    <header class="bg-white shadow-md fixed w-full z-10 top-0">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+            <h1 class="text-2xl font-bold text-blue-700 tracking-wider">SHIOSAI DMO</h1>
+            <nav class="hidden md:flex space-x-8">
+                <a href="#about" class="text-gray-600 hover:text-blue-500 font-medium transition">地域について</a>
+                <a href="#spots" class="text-gray-600 hover:text-blue-500 font-medium transition">観光スポット</a>
+                <a href="#contact" class="text-gray-600 hover:text-blue-500 font-medium transition">お問い合わせ</a>
+            </nav>
+            <button class="md:hidden text-gray-600 hover:text-blue-500">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+            </button>
+        </div>
+    </header>
+
+    <!-- 2. ヒーローセクション（メインビジュアル） -->
+    <!-- ※後でここは本物の写真に変えます -->
+    <section class="mt-16 h-[70vh] bg-blue-900 flex items-center justify-center fade-in relative" style="background-image: url('https://images.unsplash.com/photo-1493246507139-91e8fad9978e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80'); background-size: cover; background-position: center;">
+        <div class="absolute inset-0 bg-black bg-opacity-40"></div> <!-- 写真を少し暗くして文字を読ませる -->
+        <div class="relative z-10 text-center px-4">
+            <h2 class="text-4xl md:text-6xl font-bold text-white mb-6 drop-shadow-lg">潮騒と歴史が交差する街</h2>
+            <p class="text-lg md:text-2xl text-gray-200 mb-8 drop-shadow-md">忘れられない風景が、ここにある。</p>
+            <a href="#spots" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full transition shadow-lg">魅力を見る</a>
+        </div>
+    </section>
+
+    <!-- 3. Aboutセクション -->
+    <section id="about" class="py-20 bg-white">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <h2 class="text-3xl font-bold text-gray-800 mb-8 border-b-2 border-blue-500 inline-block pb-2">しおさい地域とは</h2>
+            <p class="text-gray-600 leading-relaxed text-lg text-left md:text-center">
+                海と山に囲まれた自然豊かな環境と、古くから続く歴史的な街並みが共存するエリアです。<br class="hidden md:block">
+                私たちはDMOとして、この地域の魅力を守りながら、訪れるすべての人に特別な体験を提供します。
+            </p>
+        </div>
+    </section>
+
+    <!-- 4. コンテンツ（観光スポットカード） -->
+    <section id="spots" class="py-20 bg-gray-50">
+        <div class="max-w-6xl mx-auto px-4">
+            <h2 class="text-3xl font-bold text-gray-800 mb-12 text-center">おすすめスポット</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                
+                <!-- カード1 -->
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden transition transform hover:-translate-y-2">
+                    <div class="h-48 bg-gray-300" style="background-image: url('https://images.unsplash.com/photo-1596423735880-5c6fa95958cc?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80'); background-size: cover;"></div>
+                    <div class="p-6">
+                        <h3 class="font-bold text-xl mb-2 text-gray-800">絶景の岬</h3>
+                        <p class="text-gray-600 text-sm mb-4">夕日が海に沈む瞬間は、息を呑む美しさです。</p>
+                        <span class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded text-blue-600 bg-blue-100">自然</span>
+                    </div>
+                </div>
+
+                <!-- カード2 -->
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden transition transform hover:-translate-y-2">
+                    <div class="h-48 bg-gray-300" style="background-image: url('https://images.unsplash.com/photo-1542317822-5ea5909240bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80'); background-size: cover;"></div>
+                    <div class="p-6">
+                        <h3 class="font-bold text-xl mb-2 text-gray-800">歴史博物館</h3>
+                        <p class="text-gray-600 text-sm mb-4">この街が歩んできた数百年の歴史を体感できます。</p>
+                        <span class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded text-green-600 bg-green-100">文化</span>
+                    </div>
+                </div>
+
+                <!-- カード3 -->
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden transition transform hover:-translate-y-2">
+                    <div class="h-48 bg-gray-300" style="background-image: url('https://images.unsplash.com/photo-1555396273-367ea4eb4db5?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80'); background-size: cover;"></div>
+                    <div class="p-6">
+                        <h3 class="font-bold text-xl mb-2 text-gray-800">地元グルメ横丁</h3>
+                        <p class="text-gray-600 text-sm mb-4">新鮮な海の幸を使った料理を堪能できるエリアです。</p>
+                        <span class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded text-orange-600 bg-orange-100">食</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. フッター -->
+    <footer id="contact" class="bg-gray-800 text-white py-8">
+        <div class="max-w-6xl mx-auto px-4 text-center">
+            <h2 class="text-xl font-bold mb-4">SHIOSAI DMO</h2>
+            <p class="text-gray-400 text-sm mb-4">お問い合わせ: info@shiosai-dmo.example.com</p>
+            <p class="text-gray-500 text-xs">© 2026 SHIOSAI DMO All rights reserved.</p>
+        </div>
+    </footer>
+
 </body>
 </html>
