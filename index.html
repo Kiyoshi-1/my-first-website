@@ -1,104 +1,255 @@
 <!DOCTYPE html>
+<!-- ================================================================
+  DMO 公式サイト モックアップ(完成イメージ)
+  縦1枚に主要素を並べたランディング型。中身は仮、名前だけ本物。
+  音楽性(ジャンル/音の特徴)は入れていない。
+================================================================= -->
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>【架空】しおさいDMO 公式サイト</title>
-    <!-- ここでTailwind CSSを読み込んでいます（魔法の杖です） -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        /* ちょっとしたアニメーション用の設定 */
-        .fade-in { animation: fadeIn 2s ease-in-out; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- ↓SEO: 検索結果に出るタイトルと説明。中身はHTMLに直書き -->
+  <title>DMO｜東京科学大学 Drivin' Music Orchestra</title>
+  <meta name="description" content="東京科学大学を拠点に活動するビッグバンド、Drivin' Music Orchestra(DMO)の公式サイト。ライブ情報、演奏動画、演奏依頼はこちら。">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#141110; --ink:#ede8e0; --muted:#9a9089;
+      --red:#e23b2e; --brass:#c9a24b; --line:#2a2523; --card:#1c1918;
+      --wrap:1080px; --pad:24px;
+    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    html{scroll-behavior:smooth;}
+    body{background:var(--bg);color:var(--ink);font-family:"Noto Sans JP",sans-serif;line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+    .wrap{max-width:var(--wrap);margin:0 auto;padding:0 var(--pad);}
+    a{color:inherit;text-decoration:none;}
+    section{border-bottom:1px solid var(--line);}
+
+    /* ===== ヘッダー ===== */
+    header{position:sticky;top:0;z-index:50;background:rgba(20,17,16,.85);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);}
+    .header-inner{display:flex;align-items:center;justify-content:space-between;height:66px;}
+    .logo{font-family:"Anton",sans-serif;font-size:26px;letter-spacing:2px;}
+    .logo span{color:var(--red);}
+    nav.desktop{display:flex;gap:26px;font-size:14px;font-weight:700;}
+    nav.desktop a{color:var(--muted);transition:color .2s;}
+    nav.desktop a:hover{color:var(--brass);}
+    /* ハンバーガー(スマホ) */
+    .burger{display:none;flex-direction:column;gap:5px;background:none;border:0;cursor:pointer;padding:6px;}
+    .burger span{width:24px;height:2px;background:var(--ink);transition:.3s;}
+    .mobile-menu{position:fixed;inset:66px 0 auto 0;background:var(--bg);border-bottom:1px solid var(--line);transform:translateY(-120%);transition:transform .35s;z-index:40;}
+    .mobile-menu a{display:block;padding:16px var(--pad);border-top:1px solid var(--line);color:var(--ink);font-weight:700;}
+    .mobile-menu.open{transform:translateY(0);}
+
+    /* ===== ヒーロー ===== */
+    .hero{padding:130px 0 110px;position:relative;overflow:hidden;}
+    .hero .eyebrow{color:var(--brass);font-size:13px;font-weight:700;letter-spacing:4px;text-transform:uppercase;margin-bottom:22px;}
+    .hero h1{font-family:"Anton",sans-serif;font-size:clamp(52px,10vw,118px);line-height:.92;letter-spacing:1px;margin-bottom:26px;}
+    .hero h1 em{font-style:normal;color:var(--red);}
+    .hero .sub{color:var(--muted);font-size:18px;max-width:500px;margin-bottom:38px;}
+    .btn{display:inline-block;background:var(--red);color:#fff;font-weight:700;padding:15px 32px;border-radius:2px;transition:transform .15s,background .2s;}
+    .btn:hover{background:#ff4a3d;transform:translateY(-2px);}
+    .btn.ghost{background:transparent;border:1px solid var(--line);color:var(--ink);}
+    .btn.ghost:hover{border-color:var(--brass);color:var(--brass);background:transparent;}
+    .hero-glow{position:absolute;right:-160px;top:-120px;width:520px;height:520px;background:radial-gradient(circle,rgba(226,59,46,.16),transparent 62%);pointer-events:none;}
+
+    /* ===== 汎用セクション ===== */
+    .sec{padding:88px 0;}
+    .label{color:var(--brass);font-size:13px;font-weight:700;letter-spacing:3px;text-transform:uppercase;margin-bottom:16px;}
+    .title{font-family:"Anton",sans-serif;font-size:clamp(32px,5vw,54px);letter-spacing:1px;margin-bottom:28px;}
+    .lead{font-size:17px;max-width:620px;color:var(--ink);}
+    .lead+.lead{margin-top:18px;}
+
+    /* ===== Live ===== */
+    .live-card{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 28px;padding:26px 0;border-top:1px solid var(--line);}
+    .live-date{font-family:"Anton",sans-serif;font-size:22px;color:var(--brass);min-width:130px;}
+    .live-name{font-size:19px;font-weight:700;}
+    .live-place{color:var(--muted);font-size:15px;width:100%;}
+
+    /* ===== Media ===== */
+    .media-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px;}
+    .video-box{background:var(--card);border:1px solid var(--line);aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:14px;}
+
+    /* ===== Instagram(共通要素) ===== */
+    .ig-head{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:26px;}
+    .ig-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;}
+    .ig-cell{aspect-ratio:1;background:var(--card);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;color:#4a4440;font-size:12px;transition:opacity .2s;}
+    .ig-cell:hover{opacity:.7;}
+
+    /* ===== 演奏依頼(共通要素) ===== */
+    .cta-band{background:linear-gradient(180deg,#1a1614,#141110);text-align:center;padding:96px var(--pad);}
+    .cta-band h2{font-family:"Anton",sans-serif;font-size:clamp(28px,5vw,46px);margin-bottom:16px;}
+    .cta-band p{color:var(--muted);max-width:520px;margin:0 auto 30px;}
+
+    /* ===== フッター ===== */
+    footer{padding:56px 0 40px;}
+    .foot-inner{display:flex;justify-content:space-between;flex-wrap:wrap;gap:26px;}
+    .foot-band{font-family:"Anton",sans-serif;font-size:22px;letter-spacing:1px;}
+    .foot-band span{color:var(--red);}
+    .foot-contact{color:var(--muted);font-size:14px;margin-top:8px;}
+    .sns{display:flex;gap:18px;align-items:flex-start;}
+    .sns a{width:40px;height:40px;border:1px solid var(--line);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--muted);font-weight:700;font-size:13px;transition:.2s;}
+    .sns a:hover{border-color:var(--brass);color:var(--brass);}
+    .copy{color:#4a4440;font-size:13px;margin-top:34px;}
+
+    /* ===== スクロール表示アニメ ===== */
+    .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease;}
+    .reveal.show{opacity:1;transform:none;}
+
+    /* ===== スマホ対応 ===== */
+    @media(max-width:760px){
+      nav.desktop{display:none;}
+      .burger{display:flex;}
+      .ig-grid{grid-template-columns:repeat(3,1fr);}
+      .hero{padding:90px 0 70px;}
+      .sec{padding:64px 0;}
+      .live-date{min-width:100%;}
+    }
+  </style>
 </head>
-<body class="bg-gray-50 font-sans text-gray-800">
+<body>
 
-    <!-- 1. ヘッダー（ナビゲーション） -->
-    <header class="bg-white shadow-md fixed w-full z-10 top-0">
-        <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
-            <h1 class="text-2xl font-bold text-blue-700 tracking-wider">SHIOSAI DMO</h1>
-            <nav class="hidden md:flex space-x-8">
-                <a href="#about" class="text-gray-600 hover:text-blue-500 font-medium transition">地域について</a>
-                <a href="#spots" class="text-gray-600 hover:text-blue-500 font-medium transition">観光スポット</a>
-                <a href="#contact" class="text-gray-600 hover:text-blue-500 font-medium transition">お問い合わせ</a>
-            </nav>
-            <button class="md:hidden text-gray-600 hover:text-blue-500">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
-            </button>
+  <!-- ===== ヘッダー ===== -->
+  <header>
+    <div class="wrap header-inner">
+      <a href="#top" class="logo">D<span>M</span>O</a>
+      <nav class="desktop">
+        <a href="#about">About</a>
+        <a href="#live">Live</a>
+        <a href="#media">Media</a>
+        <a href="#insta">Instagram</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <button class="burger" id="burger" aria-label="メニュー">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="#about">About</a>
+      <a href="#live">Live</a>
+      <a href="#media">Media</a>
+      <a href="#insta">Instagram</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </header>
+
+  <!-- ===== ヒーロー ===== -->
+  <section class="hero" id="top">
+    <div class="hero-glow"></div>
+    <div class="wrap">
+      <p class="eyebrow">Science Tokyo Big Band</p>
+      <h1>Drivin'<br><em>Music</em><br>Orchestra</h1>
+      <p class="sub">東京科学大学を拠点に活動するビッグバンド、DMO の公式サイト。</p>
+      <div>
+        <a href="#live" class="btn">次のステージ</a>
+        <a href="#contact" class="btn ghost">演奏を依頼する</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== About(設立の思想の枠。仮テキスト) ===== -->
+  <section class="sec reveal" id="about">
+    <div class="wrap">
+      <p class="label">About</p>
+      <h2 class="title">DMOについて</h2>
+      <p class="lead">ここに設立の思想が入る。どういう場を作りたくてこのバンドを立ち上げたのか、何を大事にしているのか。新しいバンドだからこそ、この一段落が「歴史」の代わりの芯になる。仮テキストのまま差し替える。</p>
+      <p class="lead">編成や活動の頻度など、事実の説明はこの下に続ける。</p>
+    </div>
+  </section>
+
+  <!-- ===== Live ===== -->
+  <section class="sec reveal" id="live">
+    <div class="wrap">
+      <p class="label">Live</p>
+      <h2 class="title">演奏予定</h2>
+      <div class="live-card">
+        <span class="live-date">0000.00.00</span>
+        <span class="live-name">演奏会の名前(仮)</span>
+        <span class="live-place">会場、開演、チケット情報</span>
+      </div>
+      <div class="live-card">
+        <span class="live-date">0000.00.00</span>
+        <span class="live-name">別の演奏会(仮)</span>
+        <span class="live-place">会場、開演、チケット情報</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Media ===== -->
+  <section class="sec reveal" id="media">
+    <div class="wrap">
+      <p class="label">Media</p>
+      <h2 class="title">演奏動画</h2>
+      <div class="media-grid">
+        <div class="video-box">YouTube を埋め込む(16:9)</div>
+        <div class="video-box">YouTube を埋め込む(16:9)</div>
+        <div class="video-box">YouTube を埋め込む(16:9)</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Instagram(共通要素) ===== -->
+  <section class="sec reveal" id="insta">
+    <div class="wrap">
+      <div class="ig-head">
+        <div>
+          <p class="label">Instagram</p>
+          <h2 class="title" style="margin-bottom:0;">日々の活動</h2>
         </div>
-    </header>
+        <a href="#" class="btn ghost">@dmo をフォロー</a>
+      </div>
+      <!-- 本番ではここにInstagramのフィード埋め込みを入れる。今は枠だけ -->
+      <div class="ig-grid">
+        <div class="ig-cell">投稿</div><div class="ig-cell">投稿</div>
+        <div class="ig-cell">投稿</div><div class="ig-cell">投稿</div>
+        <div class="ig-cell">投稿</div><div class="ig-cell">投稿</div>
+      </div>
+    </div>
+  </section>
 
-    <!-- 2. ヒーローセクション（メインビジュアル） -->
-    <!-- ※後でここは本物の写真に変えます -->
-    <section class="mt-16 h-[70vh] bg-blue-900 flex items-center justify-center fade-in relative" style="background-image: url('https://images.unsplash.com/photo-1493246507139-91e8fad9978e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80'); background-size: cover; background-position: center;">
-        <div class="absolute inset-0 bg-black bg-opacity-40"></div> <!-- 写真を少し暗くして文字を読ませる -->
-        <div class="relative z-10 text-center px-4">
-            <h2 class="text-4xl md:text-6xl font-bold text-white mb-6 drop-shadow-lg">潮騒と歴史が交差する街</h2>
-            <p class="text-lg md:text-2xl text-gray-200 mb-8 drop-shadow-md">忘れられない風景が、ここにある。</p>
-            <a href="#spots" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full transition shadow-lg">魅力を見る</a>
-        </div>
-    </section>
+  <!-- ===== 演奏依頼(共通要素) ===== -->
+  <section class="cta-band reveal" id="contact">
+    <h2>演奏のご依頼</h2>
+    <p>学園祭、パーティー、各種イベントでの生演奏を承っています。まずはお気軽にご連絡ください。</p>
+    <a href="mailto:" class="btn">依頼・問い合わせ</a>
+  </section>
 
-    <!-- 3. Aboutセクション -->
-    <section id="about" class="py-20 bg-white">
-        <div class="max-w-4xl mx-auto px-4 text-center">
-            <h2 class="text-3xl font-bold text-gray-800 mb-8 border-b-2 border-blue-500 inline-block pb-2">しおさい地域とは</h2>
-            <p class="text-gray-600 leading-relaxed text-lg text-left md:text-center">
-                海と山に囲まれた自然豊かな環境と、古くから続く歴史的な街並みが共存するエリアです。<br class="hidden md:block">
-                私たちはDMOとして、この地域の魅力を守りながら、訪れるすべての人に特別な体験を提供します。
-            </p>
-        </div>
-    </section>
+  <!-- ===== フッター ===== -->
+  <footer>
+    <div class="wrap foot-inner">
+      <div>
+        <p class="foot-band">D<span>M</span>O</p>
+        <p class="foot-contact">東京科学大学 Drivin' Music Orchestra</p>
+        <p class="foot-contact">お問い合わせ：（連絡先をここに）</p>
+      </div>
+      <div class="sns">
+        <a href="#" aria-label="X">X</a>
+        <a href="#" aria-label="Instagram">IG</a>
+        <a href="#" aria-label="YouTube">YT</a>
+        <a href="#" aria-label="Facebook">FB</a>
+      </div>
+    </div>
+    <div class="wrap"><p class="copy">© 2026 DMO</p></div>
+  </footer>
 
-    <!-- 4. コンテンツ（観光スポットカード） -->
-    <section id="spots" class="py-20 bg-gray-50">
-        <div class="max-w-6xl mx-auto px-4">
-            <h2 class="text-3xl font-bold text-gray-800 mb-12 text-center">おすすめスポット</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                
-                <!-- カード1 -->
-                <div class="bg-white rounded-lg shadow-lg overflow-hidden transition transform hover:-translate-y-2">
-                    <div class="h-48 bg-gray-300" style="background-image: url('https://images.unsplash.com/photo-1596423735880-5c6fa95958cc?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80'); background-size: cover;"></div>
-                    <div class="p-6">
-                        <h3 class="font-bold text-xl mb-2 text-gray-800">絶景の岬</h3>
-                        <p class="text-gray-600 text-sm mb-4">夕日が海に沈む瞬間は、息を呑む美しさです。</p>
-                        <span class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded text-blue-600 bg-blue-100">自然</span>
-                    </div>
-                </div>
+  <script>
+    // ハンバーガーメニューの開閉
+    const burger = document.getElementById('burger');
+    const menu = document.getElementById('mobileMenu');
+    burger.addEventListener('click', () => menu.classList.toggle('open'));
+    menu.querySelectorAll('a').forEach(a =>
+      a.addEventListener('click', () => menu.classList.remove('open'))
+    );
 
-                <!-- カード2 -->
-                <div class="bg-white rounded-lg shadow-lg overflow-hidden transition transform hover:-translate-y-2">
-                    <div class="h-48 bg-gray-300" style="background-image: url('https://images.unsplash.com/photo-1542317822-5ea5909240bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80'); background-size: cover;"></div>
-                    <div class="p-6">
-                        <h3 class="font-bold text-xl mb-2 text-gray-800">歴史博物館</h3>
-                        <p class="text-gray-600 text-sm mb-4">この街が歩んできた数百年の歴史を体感できます。</p>
-                        <span class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded text-green-600 bg-green-100">文化</span>
-                    </div>
-                </div>
-
-                <!-- カード3 -->
-                <div class="bg-white rounded-lg shadow-lg overflow-hidden transition transform hover:-translate-y-2">
-                    <div class="h-48 bg-gray-300" style="background-image: url('https://images.unsplash.com/photo-1555396273-367ea4eb4db5?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80'); background-size: cover;"></div>
-                    <div class="p-6">
-                        <h3 class="font-bold text-xl mb-2 text-gray-800">地元グルメ横丁</h3>
-                        <p class="text-gray-600 text-sm mb-4">新鮮な海の幸を使った料理を堪能できるエリアです。</p>
-                        <span class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded text-orange-600 bg-orange-100">食</span>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <!-- 5. フッター -->
-    <footer id="contact" class="bg-gray-800 text-white py-8">
-        <div class="max-w-6xl mx-auto px-4 text-center">
-            <h2 class="text-xl font-bold mb-4">SHIOSAI DMO</h2>
-            <p class="text-gray-400 text-sm mb-4">お問い合わせ: info@shiosai-dmo.example.com</p>
-            <p class="text-gray-500 text-xs">© 2026 SHIOSAI DMO All rights reserved.</p>
-        </div>
-    </footer>
+    // スクロールで各セクションをふわっと表示
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('show'); });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  </script>
 
 </body>
 </html>
